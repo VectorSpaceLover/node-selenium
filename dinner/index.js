@@ -10,13 +10,14 @@ options   = new chrome.Options();
 options.addArguments('headless'); // note: without dashes
 options.addArguments('disable-gpu');
 var path = require('chromedriver').path;
+const { val } = require('cheerio/lib/api/attributes');
 var service = new chrome.ServiceBuilder(path).build();
     chrome.setDefaultService(service);
 let browser = new swd.Builder();
 let tab = browser
 .forBrowser("chrome")
-// .withCapabilities(swd.Capabilities.chrome())
-// .setChromeOptions(options)
+.withCapabilities(swd.Capabilities.chrome())
+.setChromeOptions(options)
 .build();
 
 const { By } = swd;
@@ -26,34 +27,25 @@ const { By } = swd;
 const email = 'zeke';
 const pass = 'coys';
 
+let availableDinner = [
+    {
+        name: 'Friday',
+        timeList: []
+    },
+    {
+        name: 'Saturday',
+        timeList: []
+    },
+    {
+        name: 'Sunday',
+        timeList: []
+    },
+];
+
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-const dinnerState = function(url)
-{
-    let info = {};
-    console.log(url);
-    return rp(url)
-    .then(function(html){
-        $ = cheerio.load(html);
-        console.log(html);
-        $('.WordSection2 > .MsoNormal > span').each((i, data) => {
-            console.log($(data).text().trim());
-        });
-        // $('tbody > tr > td').each((i, data) => {
-        //     let newItem = {}
-        //     newItem[days[i]] = $(data).text().trim().toUpperCase();
-        //     info = { ...info, ...newItem};
-        // });
-        // return info;
-    })
-    .catch(function(err){
-        console.log('error' + err.message);
-        return null;
-    });
-}
-
+// Step 1 - Opening the geeksforgeeks sign in page
 async function login(url)
 {
     try{
@@ -75,7 +67,45 @@ async function login(url)
         timeout(500);
         await btnLogin.click();
         timeout(500);
-        dinnerState(url + 'login/booking');
+
+        const ele1 = await tab.findElement(By.xpath(`//div[@class="WordSection2"]`));
+        const ele2 = await tab.findElement(By.xpath(`//div[@class="WordSection3"]`));
+        const ele3 = await tab.findElement(By.xpath(`//div[@class="WordSection4"]`));
+        const ele1List = await ele1.findElements({tagName: 'span'});
+        const ele2List = await ele2.findElements({tagName: 'span'});
+        const ele3List = await ele3.findElements({tagName: 'span'});
+        await Promise.all(ele1List.map( async(val) => {
+            let res = await val.getText()
+            if(res.indexOf('booked') < 0)
+            {
+                let arr = res.split(' ');
+                let newItem = {time: arr[0], state: arr[1]};
+                let tmp = availableDinner[0]['timeList'];
+                let newData = [...tmp, newItem];
+                availableDinner[0]['timeList'] = newData;
+                
+            }
+        }))
+
+        await Promise.all(ele2List.map(async (val) => {
+            let res = await val.getText()
+            if(res.indexOf('booked') < 0)
+            {
+                let arr = res.split(' ');
+                availableDinner[1].timeList.push({time: arr[0], state: arr[1]});
+            }
+
+        }))
+        
+        await Promise.all(ele3List.map(async (val) => {
+            let res = await val.getText()
+            if(res.indexOf('booked') < 0)
+            {
+                let arr = res.split(' ');
+                availableDinner[2].timeList.push({time: arr[0], state: arr[1]});
+            }
+        }))
+        return availableDinner;
     }
     catch(err){
         console.log(err.message);

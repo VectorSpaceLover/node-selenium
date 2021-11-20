@@ -9,9 +9,9 @@ chrome    = require('selenium-webdriver/chrome')
 options   = new chrome.Options();
 options.addArguments('headless'); // note: without dashes
 options.addArguments('disable-gpu');
-var path = require('chromedriver').path;
-var service = new chrome.ServiceBuilder(path).build();
-    chrome.setDefaultService(service);
+// var path = require('chromedriver').path;
+// var service = new chrome.ServiceBuilder(path).build();
+//     chrome.setDefaultService(service);
 
 
 const browser = new swd.Builder();
