@@ -1,0 +1,36 @@
+{
+  "name": "scraping-node-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Venus9023/scraping-node-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Venus9023/scraping-node-/issues"
+  },
+  "homepage": "https://github.com/Venus9023/scraping-node-#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "chromedriver": "^96.0.0",
+    "connect": "^3.7.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "puppeteer": "^11.0.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "selenium-webdriver": "^4.0.0"
+  },
+  "devDependencies": {
+    "jasmine": "^3.10.0"
+  }
+}
