@@ -3,16 +3,15 @@ const personState = require('./calendar');
 const login = require('./dinner');
 const cinemaState = require('./cinema');
 
-const url = 'https://courselab.lnu.se/scraper-site-2';
+// const url = 'https://courselab.lnu.se/scraper-site-2';
 
 const siteInfo = require('./constant');
 const FRIDAY = 'Friday';
 const SATURDAY = 'Saturday';
 const SUNDAY = 'Sunday';
 
-const getInfoFromUrl = (url) => {
-    console.log(url);
-    
+const getInfoFromUrl = () => {
+    let url = process.argv[process.argv.length - 1];
     return new Promise((resolve, reject) => {
         urlInfo(url)
         .then(async (data) => {
@@ -128,7 +127,7 @@ const getInfoFromUrl = (url) => {
     })
 }
 
-getInfoFromUrl(url)
+getInfoFromUrl()
 .then((data) => {
     // console.log(data);
 })
