@@ -11,6 +11,7 @@ const SATURDAY = 'Saturday';
 const SUNDAY = 'Sunday';
 
 const getInfoFromUrl = (url) => {
+    console.log(url);
     
     return new Promise((resolve, reject) => {
         urlInfo(url)
@@ -51,6 +52,7 @@ const getInfoFromUrl = (url) => {
                         }
                         if(availableDays.length === 0)
                             break;
+                        console.log('Scraping showtimes...OK');
                         let cinema = await cinemaState(value.url);
                         availableCinema = cinema.filter((ele) => {
                             for(let i = 0; i < availableDays.length; i++){
@@ -93,23 +95,31 @@ const getInfoFromUrl = (url) => {
                                 }
                             }
                         }
-                        console.log('Recommendations');
-                        console.log('                ');
-                        console.log('================');
-
-                        availableCinema.forEach(ele => {
-                            // console.log(ele);
-                            let day = ele['name'];
-                            let arr = ele['value'];
-                            arr.forEach((ele) => {
-                                let time = ele['timeList'];
-                                let outPut;
-                                time.forEach(val => {
-                                    outPut = 'On ' + day + ' the movie ' + ele['movie'] + ' starts at ' + val['time'] + ' and there is a free table between ' + ele['dinner'];
-                                    console.log(outPut);
-                                });
-                            })
-                        });
+                        
+                        if(availableCinema.length > 0)
+                        {
+                            console.log('Scraping possible reservations...OK');
+                            console.log('                ');
+                            console.log('                ');
+                            console.log('                ');
+                            console.log('Recommendations');
+                            console.log('                ');
+                            console.log('================');
+                            availableCinema.forEach(ele => {
+                                // console.log(ele);
+                                let day = ele['name'];
+                                let arr = ele['value'];
+                                arr.forEach((ele) => {
+                                    let time = ele['timeList'];
+                                    let outPut;
+                                    time.forEach(val => {
+                                        outPut = 'On ' + day + ' the movie ' + ele['movie'] + ' starts at ' + val['time'] + ' and there is a free table between ' + ele['dinner'];
+                                        console.log(outPut);
+                                    });
+                                })
+                            });
+                        }
+                        
                         // console.log(availableCinema[0]['value'][0]);
                         break;
                 }
