@@ -35,11 +35,17 @@ Note that you will need to install at least one of the above WebDrivers in the [
 
 1. Once you have all the required prerequisites ready, create your project folder:
 
+but now you can run "npm install", because i have made everything.
+you can run "npm install".
+
+If you make your project newly, you have to run following command.
+
 ```
 mkdir node-selenium
 cd node-selenium
 npm init
 npm install selenium-webdriver
+npm install chrome-
 ```
 
 2. When project directory is setup, you will need to install one of the WebDrivers from the [Prerequisites](#prerequisites) section.
@@ -60,3 +66,4 @@ you can download chromdrver.exe from https://www.automationtestinghub.com/downlo
 4. Usage
 
 You can input npm start <url> in command prompt. Url is server url. So you can expand this project if you want.
+You should be able to run standard in the console to see that you have no errors with the command npm run lint.
