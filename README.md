@@ -28,7 +28,6 @@ To continue further development with this tool, make sure to read following guid
 
 Optional:
 - [Chrome WebDriver](https://www.npmjs.com/package/chromedriver#building-and-installing)
-- [Firefox WebDriver](https://www.npmjs.com/package/geckodriver#install)
 
 Note that you will need to install at least one of the above WebDrivers in the [Installation](#installation) part.
 
@@ -44,10 +43,6 @@ npm install selenium-webdriver
 ```
 
 2. When project directory is setup, you will need to install one of the WebDrivers from the [Prerequisites](#prerequisites) section.
-
-*Firefox*
-
-<img src="https://i.imgur.com/I9czv1a.png">
 
 *Chrome*
 
