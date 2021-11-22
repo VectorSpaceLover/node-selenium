@@ -6,6 +6,7 @@ const cinemaState = require('./cinema');
 // const url = 'https://courselab.lnu.se/scraper-site-2';
 
 const siteInfo = require('./constant');
+const e = require('express');
 const FRIDAY = 'Friday';
 const SATURDAY = 'Saturday';
 const SUNDAY = 'Sunday';
@@ -37,29 +38,40 @@ const getInfoFromUrl = () => {
                         break;
                     case siteInfo[1]['name']:
                         let availableDays = [];
-                        if(personInfo[0][FRIDAY] && personInfo[1][FRIDAY] && personInfo[2][FRIDAY])
-                                availableDays.push(FRIDAY);
-                        else{
-                            if(personInfo[0][SATURDAY] && personInfo[1][SATURDAY] && personInfo[2][SATURDAY])
-                                availableDays.push(SATURDAY);
-                            else{
-                                if(personInfo[0][SUNDAY] && personInfo[1][SUNDAY] && personInfo[2][SUNDAY])
-                                    availableDays.push(SUNDAY);
-                                else
-                                    console.log('We cant play together!');
-                            }
+                        if((personInfo[0][FRIDAY] === 'OK') && (personInfo[1][FRIDAY] === 'OK') && (personInfo[2][FRIDAY] === 'OK'))
+                            availableDays.push(FRIDAY);
+                        if((personInfo[0][SATURDAY] === 'OK') && (personInfo[1][SATURDAY] === 'OK') && (personInfo[2][SATURDAY] === 'OK'))
+                            availableDays.push(SATURDAY);
+                        if((personInfo[0][SUNDAY] === 'OK') && (personInfo[1][SUNDAY] === 'OK') && (personInfo[2][SUNDAY] === 'OK'))
+                            availableDays.push(SUNDAY);
+                          
+                        if(availableDays.length === 0){
+                            console.log('We cant play together!');
+                            return;
                         }
-                        if(availableDays.length === 0)
-                            break;
                         console.log('Scraping showtimes...OK');
                         let cinema = await cinemaState(value.url);
-                        availableCinema = cinema.filter((ele) => {
-                            for(let i = 0; i < availableDays.length; i++){
-                                if(availableDays[i] === ele.name)
+                        
+                        for(let aIndex = 0; aIndex < availableDays.length; aIndex++){
+                            let rt = cinema.filter((ele) => {
+                                if(availableDays[aIndex] === ele.name)
                                     return true;
-                                else return false;
-                            }
-                        })
+                                else 
+                                    return false;
+                            })
+                            availableCinema.push(...rt);
+                        }
+                        for(let f = 0; f < availableCinema.length; f++)
+                        {
+                            let tp = availableCinema[f]['value'];
+                            tp = tp.filter((ele) => {
+                                if(ele['timeList'].length === 0)
+                                    return false;
+                                else
+                                    return true;
+                            })
+                            availableCinema[f]['value'] = tp;
+                        }
                         break;
                     case siteInfo[2]['name']:
                         availableDinner = await login(value.url);
@@ -72,29 +84,35 @@ const getInfoFromUrl = () => {
                                         let cinemaTimeList = movieList[p]['timeList'];
                                         let dinnerTimeList = availableDinner[j]['timeList'];
                                         let dinner = {};
-                                        cinemaTimeList = cinemaTimeList.filter((ele) => {
-                                            let cineamTime = ele['time'].split(':');
-                                            let bFound = false;
-                                            for(let jj = 0; jj < dinnerTimeList.length; jj++){
-                                                dinner = dinnerTimeList[jj]['time']
-                                                let dinnerTime = dinnerTimeList[jj]['time'].split('-');
-                                                if(parseInt(cineamTime[0]) + 2 <= parseInt(dinnerTime[0])){
-                                                    bFound = true;
-                                                    break;
+                                        if(cinemaTimeList.length > 0){
+                                            // console.log(availableCinema[i].name);
+                                            // console.log(cinemaTimeList);
+                                            cinemaTimeList = cinemaTimeList.filter((ele) => {
+                                                let cineamTime = ele['time'].split(':');
+                                                let bFound = false;
+                                                for(let jj = 0; jj < dinnerTimeList.length; jj++){
+                                                    dinner = dinnerTimeList[jj]['time']
+                                                    let dinnerTime = dinnerTimeList[jj]['time'].split('-');
+                                                    // console.log('c==' + cineamTime[0]);
+                                                    // console.log('d==' + dinnerTime[0]);
+                                                    if(parseInt(cineamTime[0]) + 2 <= parseInt(dinnerTime[0])){
+                                                        bFound = true;
+                                                        break;
+                                                    }
+                                                    else
+                                                        bFound = false;
                                                 }
-                                                else
-                                                    bFound = false;
-                                            }
-                                            return bFound;
-                                        })
-                                        movieList[p]['timeList'] = cinemaTimeList;
-                                        movieList[p]['dinner'] =  dinner;
+                                                return bFound;
+                                            })
+                                            movieList[p]['timeList'] = cinemaTimeList;
+                                            movieList[p]['dinner'] =  dinner;
+                                        }
+                                        
                                     }
                                     availableCinema[i].value = movieList;
                                 }
                             }
                         }
-                        
                         if(availableCinema.length > 0)
                         {
                             console.log('Scraping possible reservations...OK');
@@ -104,8 +122,7 @@ const getInfoFromUrl = () => {
                             console.log('Recommendations');
                             console.log('                ');
                             console.log('================');
-                            availableCinema.forEach(ele => {
-                                // console.log(ele);
+                            availableCinema.map((ele) => {
                                 let day = ele['name'];
                                 let arr = ele['value'];
                                 arr.forEach((ele) => {

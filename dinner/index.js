@@ -69,13 +69,13 @@ async function login(url)
         timeout(500);
 
         const ele1 = await tab.findElement(By.xpath(`//div[@class="WordSection2"]`));
-        const ele2 = await tab.findElement(By.xpath(`//div[@class="WordSection3"]`));
-        const ele3 = await tab.findElement(By.xpath(`//div[@class="WordSection4"]`));
+        const ele2 = await tab.findElement(By.xpath(`//div[@class="WordSection4"]`));
+        const ele3 = await tab.findElement(By.xpath(`//div[@class="WordSection6"]`));
         const ele1List = await ele1.findElements({tagName: 'span'});
         const ele2List = await ele2.findElements({tagName: 'span'});
         const ele3List = await ele3.findElements({tagName: 'span'});
         await Promise.all(ele1List.map( async(val) => {
-            let res = await val.getText()
+            let res = await val.getText();
             if(res.indexOf('booked') < 0)
             {
                 let arr = res.split(' ');
@@ -83,12 +83,11 @@ async function login(url)
                 let tmp = availableDinner[0]['timeList'];
                 let newData = [...tmp, newItem];
                 availableDinner[0]['timeList'] = newData;
-                
             }
         }))
 
         await Promise.all(ele2List.map(async (val) => {
-            let res = await val.getText()
+            let res = await val.getText();
             if(res.indexOf('booked') < 0)
             {
                 let arr = res.split(' ');
@@ -98,7 +97,7 @@ async function login(url)
         }))
         
         await Promise.all(ele3List.map(async (val) => {
-            let res = await val.getText()
+            let res = await val.getText();
             if(res.indexOf('booked') < 0)
             {
                 let arr = res.split(' ');

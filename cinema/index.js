@@ -144,19 +144,19 @@ async function cinemaState(url)
 
         for (let i = 0; i < cinema.length; i++) {
             firstInput.click();
-            await timeout(500);
+            await timeout(700);
             const dayList = await firstForm.findElements({tagName: 'li'});
             dayList[i + 1].click();
-            await timeout(500);
+            await timeout(700);
             const movieList = await secondForm.findElements({tagName: 'li'});
             for(let j = 0; j < movieList.length - 1; j++){
                 secondInput.click();
-                await timeout(500);
+                await timeout(700);
                 movieList[j + 1].click();
-                await timeout(500);
+                await timeout(700);
                 const btnCheck = await tab.findElement({tagName: 'button', id: 'check'});
                 btnCheck.click();
-                await timeout(500);
+                await timeout(700);
                 await tab.findElement(By.xpath(`//div[@id="message"]`))
                 .then(function(val) {
                     val.getText()
