@@ -24,7 +24,7 @@ To continue further development with this tool, make sure to read following guid
 ### Prerequisites
 
 - [Node](https://nodejs.org/en/download/)
-- [Selenium](https://github.com/SeleniumHQ/selenium/tree/master/javascript/node/selenium-webdriver#installation)
+- [Selenium](https://www.npmjs.com/package/selenium-webdriver)
 
 Optional:
 - [Chrome WebDriver](https://www.npmjs.com/package/chromedriver#building-and-installing)
