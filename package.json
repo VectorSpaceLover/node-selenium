@@ -26,6 +26,7 @@
     "chromedriver": "^96.0.0",
     "connect": "^3.7.0",
     "express": "^4.17.1",
+    "jsdoc": "^3.6.7",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "npm-package-json-lint": "^5.4.2",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "eslint": "^8.3.0",
+    "eslint-config-google": "^0.14.0",
     "jasmine": "^3.10.0"
   }
 }
