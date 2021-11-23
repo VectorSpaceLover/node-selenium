@@ -35,35 +35,51 @@ Note that you will need to install at least one of the above WebDrivers in the [
 
 1. Once you have all the required prerequisites ready, create your project folder:
 
-but now you can run "npm install", because i have made everything.
-you can run "npm install".
-
-If you make your project newly, you have to run following command.
-
 ```
 mkdir node-selenium
 cd node-selenium
 npm init
-npm install selenium-webdriver
-npm install chrome-
+npm install cheerio               // cheerio is Node. js library that helps developers interpret and analyze web pages using a jQuery-like syntax.
+npm install chromedriver          // The main purpose of the ChromeDriver is to launch Google Chrome.
+npm install selenium-webdriver    // Selenium WebDriver is a free, open-source, portable software-testing framework for testing web applications quickly.
+npm install -g eslint             // ESLint is an open source JavaScript linting utility that help you overcome developer errors as JavaScript is loosely-typed language. 
 ```
 
-2. When project directory is setup, you will need to install one of the WebDrivers from the [Prerequisites](#prerequisites) section.
+2. Download our src code, by using one of these commands: 
 
-*Chrome*
-
-<img src="https://i.imgur.com/ALgnAQf.png">
-
-3. Download our server script accordingly to the WebDriver you are using, by using one of these commands: 
-
-*Chrome*
-
-```curl https://github.com/Venus9023/node-selenium/server.js > server.js```
+git clone https://github.com/Venus9023/node-selenium.git
 
 you can download chromdrver.exe from https://www.automationtestinghub.com/download-chrome-driver/
 
+Next, you have to copy this file to node-selenium directory.
+
+3. To run "npm run lint", you have to implement like this.
+
+Now we can use "eslint" command and this make examiner to be able to run standard in the console to see that you have no errors with the command npm run lint.
+
+In the last time: Please input and implement "eslint --init" command in command prompt.
+
+Then you can select in following image files.
+<img src="./1.png">
+
+<img src="./2.png">
+
+<img src="./3.png">
+
+<img src="./4.png">
+
+<img src="./5.png">
+
+<img src="./6.png">
 
 4. Usage
+
+command line type: 
+  
+  npm start <url> // for example: npm start https://courselab.lnu.se/scraper-site-1
+                                  npm start https://courselab.lnu.se/scraper-site-2
+  
+  npm run lint // to see that you have no errors.
 
 You can input npm start <url> in command prompt. Url is server url. So you can expand this project if you want.
 You should be able to run standard in the console to see that you have no errors with the command npm run lint.
