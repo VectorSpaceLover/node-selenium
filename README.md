@@ -60,6 +60,8 @@ Now we can use "eslint" command and this make examiner to be able to run standar
 In the last time: Please input and implement "eslint --init" command in command prompt.
 
 Then you can select in following image files.
+
+
 <img src="./1.png">
 
 <img src="./2.png">
