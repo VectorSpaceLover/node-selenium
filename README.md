@@ -78,10 +78,10 @@ Then you can select in following image files.
 
 command line type: 
   
-  npm start <url> // for example: npm start https://courselab.lnu.se/scraper-site-1
-                                  npm start https://courselab.lnu.se/scraper-site-2
+  npm start <url>         // for example: npm start https://courselab.lnu.se/scraper-site-1
+                                          npm start https://courselab.lnu.se/scraper-site-2
   
-  npm run lint // to see that you have no errors.
+  npm run lint            // to see that you have no errors.
 
 You can input npm start <url> in command prompt. Url is server url. So you can expand this project if you want.
 You should be able to run standard in the console to see that you have no errors with the command npm run lint.
